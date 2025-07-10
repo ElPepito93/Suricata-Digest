@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suricata Digest – July 9, 2025</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #ffffff;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    
+    .container {
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 0 16px;
+    }
+    
+    /* Header - Mobile First */
+    .header {
+        background: #ffffff;
+        border-bottom: 3px solid #e60000;
+        padding: 16px 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .header-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .masthead {
+        text-align: center;
+    }
+    
+    .masthead h1 {
+        font-family: 'Georgia', serif;
+        font-size: 24px;
+        font-weight: bold;
+        color: #000;
+        letter-spacing: -0.5px;
+        margin-bottom: 4px;
+    }
+    
+    .date {
+        font-size: 12px;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+    }
+    
+    .tagline {
+        text-align: center;
+        font-style: italic;
+        color: #666;
+        font-size: 14px;
+        margin: 12px 0 16px 0;
+        padding: 0 16px;
+    }
+    
+    /* Navigation - Mobile Optimized */
+    .nav-container {
+        background: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
+        padding: 8px 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .nav {
+        display: flex;
+        gap: 12px;
+        padding: 0 16px;
+        min-width: max-content;
+    }
+    
+    .nav a {
+        color: #333;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        padding: 8px 12px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        background: white;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .nav a:hover, .nav a:active {
+        background: #e60000;
+        color: white;
+        transform: translateY(-1px);
+    }
+    
+    /* Main Content - Single Column */
+    .main-content {
+        display: block;
+        margin: 24px 0;
+    }
+    
+    .primary-content {
+        width: 100%;
+    }
+    
+    .sidebar {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 24px;
+        border-left: 4px solid #e60000;
+    }
+    
+    .sidebar h3 {
+        font-size: 16px;
+        margin-bottom: 16px;
+        color: #333;
+        font-weight: 700;
+    }
+    
+    .sidebar-item {
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .sidebar-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+    
+    .sidebar-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 4px;
+        line-height: 1.4;
+    }
+    
+    .sidebar-source {
+        font-size: 11px;
+        color: #666;
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+    
+    /* Sections */
+    .section {
+        margin-bottom: 32px;
+    }
+    
+    .section-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #e60000;
+        position: relative;
+    }
+    
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 40px;
+        height: 2px;
+        background: #333;
+    }
+    
+    /* Articles - Mobile Optimized */
+    .article {
+        margin-bottom: 20px;
+        padding: 20px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: 1px solid #f0f0f0;
+    }
+    
+    .article:active {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+    
+    .article-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 12px;
+        line-height: 1.3;
+    }
+    
+    .article-title a {
+        color: #333;
+        text-decoration: none;
+    }
+    
+    .article-title a:hover {
+        color: #e60000;
+    }
+    
+    .article-summary {
+        font-size: 15px;
+        line-height: 1.6;
+        color: #555;
+        margin-bottom: 12px;
+    }
+    
+    .article-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        color: #666;
+        border-top: 1px solid #f0f0f0;
+        padding-top: 12px;
+    }
+    
+    .source {
+        font-weight: 600;
+        color: #e60000;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+    
+    .source:hover {
+        text-decoration: underline;
+    }
+    
+    .read-time {
+        font-size: 11px;
+        color: #999;
+        background: #f8f9fa;
+        padding: 2px 6px;
+        border-radius: 10px;
+    }
+    
+    /* Breaking News - Mobile Enhanced */
+    .breaking {
+        background: linear-gradient(135deg, #fff5f5 0%, #fff1f1 100%);
+        border: 3px solid #e60000;
+        border-radius: 16px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 0 0 1px rgba(230, 0, 0, 0.1), 0 4px 20px rgba(230, 0, 0, 0.1);
+    }
+    
+    .breaking::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #e60000, #ff4444, #e60000);
+        border-radius: 13px 13px 0 0;
+    }
+    
+    .breaking::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #e60000, #ff4444, #e60000);
+        border-radius: 0 0 13px 13px;
+    }
+    
+    .breaking .article-title::before {
+        content: "🚨 BREAKING";
+        background: #e60000;
+        color: white;
+        font-size: 10px;
+        font-weight: bold;
+        padding: 4px 8px;
+        border-radius: 12px;
+        margin-right: 8px;
+        letter-spacing: 0.5px;
+        display: inline-block;
+        margin-bottom: 8px;
+    }
+    
+    /* Lead Article - Mobile Optimized */
+    .lead-article {
+        margin-bottom: 24px;
+        padding: 24px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    
+    .lead-article .article-title {
+        font-size: 22px;
+        margin-bottom: 16px;
+        color: #333;
+        line-height: 1.2;
+    }
+    
+    .lead-article .article-summary {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #555;
+    }
+    
+    /* Footer */
+    .footer {
+        background: #333;
+        color: #fff;
+        padding: 32px 0;
+        margin-top: 40px;
+    }
+    
+    .footer-content {
+        text-align: center;
+    }
+    
+    .footer h4 {
+        font-size: 18px;
+        margin-bottom: 12px;
+        color: #fff;
+    }
+    
+    .footer p {
+        margin-bottom: 8px;
+        color: #ccc;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+    
+    .footer-links {
+        margin-top: 16px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+    
+    .footer-links a {
+        color: #ccc;
+        text-decoration: none;
+        font-size: 13px;
+        padding: 8px 12px;
+        border-radius: 20px;
+        background: rgba(255,255,255,0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+        color: #e60000;
+        background: rgba(255,255,255,0.2);
+    }
+    
+    /* Tablet Styles */
+    @media (min-width: 768px) {
+        .container {
+            padding: 0 24px;
+        }
+        
+        .masthead h1 {
+            font-size: 36px;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 32px;
+            margin: 32px 0;
+        }
+        
+        .sidebar {
+            margin-top: 0;
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+        }
+        
+        .nav {
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .nav a {
+            font-size: 13px;
+            padding: 10px 16px;
+        }
+        
+        .article {
+            padding: 24px;
+        }
+        
+        .article-title {
+            font-size: 20px;
+        }
+        
+        .lead-article {
+            padding: 32px;
+        }
+        
+        .lead-article .article-title {
+            font-size: 28px;
+        }
+    }
+    
+    /* Desktop Styles */
+    @media (min-width: 1024px) {
+        .container {
+            max-width: 1200px;
+            padding: 0 32px;
+        }
+        
+        .masthead h1 {
+            font-size: 48px;
+        }
+        
+        .main-content {
+            gap: 40px;
+            margin: 40px 0;
+        }
+        
+        .nav {
+            gap: 30px;
+        }
+        
+        .nav a {
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 4px;
+            background: transparent;
+            box-shadow: none;
+        }
+        
+        .article:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 25px rgba(0,0,0,0.12);
+        }
+        
+        .article-title {
+            font-size: 22px;
+        }
+        
+        .lead-article {
+            padding: 40px;
+        }
+        
+        .lead-article .article-title {
+            font-size: 36px;
+        }
+        
+        .lead-article .article-summary {
+            font-size: 18px;
+        }
+    }
+    
+    /* Touch Improvements */
+    @media (hover: none) and (pointer: coarse) {
+        .nav a {
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .article {
+            cursor: pointer;
+        }
+        
+        .article:hover {
+            transform: none;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+    }
+    
+    /* Reduce motion for accessibility */
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+</style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="masthead">
+                    <h1>Suricata Digest</h1>
+                    <div class="date">July 9, 2025</div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tagline">Intelligence-Driven News Curation</div>
+        
+        <nav class="nav-container">
+            <div class="nav">
+                <a href="#breaking">Breaking</a>
+                <a href="#politics">Politics</a>
+                <a href="#business">Business</a>
+                <a href="#international">International</a>
+                <a href="#science">Science</a>
+                <a href="#health">Health</a>
+                <a href="#climate">Climate</a>
+                <a href="#entertainment">Entertainment</a>
+            </div>
+        </nav>
+        
+        <div class="main-content">
+            <main class="primary-content">
+                <section id="breaking" class="section">
+                    <h2 class="section-title">Breaking News</h2>
+                    <article class="article breaking lead-article">
+                        <h3 class="article-title"><a href="https://apnews.com/article/trump-tariffs-china-tiktok-iran-immigration-trade-9041fa893f99cfba5eb3663749dd10d1" target="_blank">Trump Confirms Tariffs Will Take Effect Today After 90-Day Pause Expires</a></h3>
+                        <div class="article-summary">
+                            President Donald Trump confirmed he is not planning to extend the 90-day tariff pause that expires today, July 9. The administration will notify countries that trade penalties will take effect unless deals are reached. Trump has already announced new tariffs of up to 40% on countries including Japan and South Korea, marking a significant escalation in his trade war policies.
+                        </div>
+                        <div class="article-meta">
+                            <a href="https://apnews.com/article/trump-tariffs-china-tiktok-iran-immigration-trade-9041fa893f99cfba5eb3663749dd10d1" class="source" target="_blank">AP News</a>
+                            <span class="read-time">4 min read</span>
+                        </div>
+                    </article>
+                </section>
+
+                <section id="politics" class="section">
+                    <h2 class="section-title">Politics</h2>
+                    <article class="article">
+                        <h3 class="article-title"><a href="https://www.npr.org/2025/07/07/nx-s1-5407873/trump-tariff-rates-trade" target="_blank">Trump Takes Radical Approach to Trade with Letter Campaign</a></h3>
+                        <div class="article-summary">
+                            After markets plummeted following his initial tariff announcement, Trump lowered tariffs to 10% for 90 days before setting them to jump back to "Liberation Day" levels today. His administration has sent letters to multiple countries threatening higher tariff rates, representing a radical shift in trade policy that economists warn could have dire consequences.
+                        </div>
+                        <div class="article-meta">
+                            <a href="https://www.npr.org/2025/07/07/nx-s1-5407873/trump-tariff-rates-trade" class="source" target="_blank">NPR</a>
+                            <span class="read-time">5 min read</span>
+                        </div>
+                    </article>
+
+                    <article class="article">
+                        <h3 class="article-title"><a href="https://www.pbs.org/newshour/show/june-9-2025-pbs-news-hour-full-episode" target="_blank">California Sues Trump Administration Over National Guard Deployment</a></h3>
+                        <div class="article-summary">
+                            California sues the Trump administration for deploying the National Guard as protests against immigration raids turn violent. The legal challenge highlights growing tensions between federal immigration enforcement and state-level resistance to administration policies. 700 Marines from Twentynine Palms have been ordered to assist in Los Angeles operations.
+                        </div>
+                        <div class="article-meta">
+                            <a href="https://www.pbs.org/newshour/show/june-9-2025-pbs-news-hour-full-episode" class="source" target="_blank">PBS News Hour</a>
+                            <span class="read-time">5 min read</span>
+                        </div>
+                    </article>
+                </section>
+
+                <section id="business" class="section">
+                    <h2 class="section-title">Business & Economy</h2>
+                    <article class="article">
+                        <h3 class="article-title"><a href="https://www.cnn.com/2025/07/07/economy/trump-letters-tariffs" target="_blank">Trump's Tariff Threat Could Raise Prices for American Consumers</a></h3>
+                        <div class="article-summary">
+                            The prospect of higher tariffs on goods from South Korea and Japan could translate into higher prices for American consumers. Among the top imports from these countries are cars, auto parts, semiconductors, pharmaceuticals and machinery. Trump has placed or threatened to levy tariffs on a growing number of trading partners.
+                        </div>
+                        <div class="article-meta">
+                            <a href="https://www.cnn.com/2025/07/07/economy/trump-letters-tariffs" class="source" target="_blank">CNN Business</a>
+                            <span class="read-time">4 min read</span>
+                        </div>
+                    </article>
+
+                    <article class="article">
+                        <h3 class="article-title"><a href="https://www.cnbc.com/2025/07/07/trump-trade-bessent-tariff-deadline.html" target="_blank">Administration Teases More Trade Deals Despite Shifting Deadlines</a></h3>
+                        <div class="article-summary">
+                            The Trump administration continues to tease additional trade agreements while repeatedly adjusting tariff deadlines. Trump has announced plans to impose 50% tariffs on copper imports while the White House claims the odds of tariff-related inflation are low, comparing them to "pandemics or meteors."
+                        </div>
+                        <div class="article-meta">
+                            <a href="https://www.cnbc.com/2025/07/07/trump-trade-bessent-tariff-deadline.html" class="source" target="_blank">CNBC</a>
+                            <span class="read-time">4 min read</span>
+                        </div>
+                    </article>
+                </section>
+
+                <section id="international" class="section">
+                    <h2 class="section-title">International</h2>
+                    <article class="article">
+                        <h3 class="article-title"><a href="https://www.kyivpost.com/thread/55943" target="_blank">Russia Launches Record-Breaking Drone Attack on Western Ukraine</a></h3>
+                        <div class="article-summary">
+                            Russia launched a record-breaking overnight drone and missile attack on the western Ukrainian city of Lutsk in the Volyn region, sparking fires and causing widespread damage. The assault began late Tuesday and continued into Wednesday morning, marking a significant escalation in the conflict.
+                        </div>
+                        <div class="article-meta">
+                            <a href="https://www.kyivpost.com/thread/55943" class="source" target="_blank">Kyiv Post</a>
+                            <span class="read-time">4 min read</span>
+                        </div>
+                    </article>
+
+                    <article class="article">
+                        <h3 class="article-title"><a href="https://www.pbs.org/newshour/show/july-5-2025-pbs-news-weekend-full-episode" target="_blank">Rescue Workers Search for Missing After Texas Flash Floods</a></h3>
+                        <div class="article-summary">
+                            Rescue workers urgently search for the missing after deadly flash floods in central Texas. The flooding has caused significant damage across multiple counties, with emergency responders working around the clock to locate survivors and assess the full extent of the disaster.
+                        </div>
+                        <div class="article-meta">
+                            <a href="https://www.pbs.org/newshour/show/july-5-2025-pbs-news-weekend-full-episode" class="source" target="_blank">PBS News Weekend</a>
+                            <span class="read-time">5 min read</span>
+                        </div>
+                    </article>
+                </section>
+
+                <section id="science" class="section">
+                    <h2 class="section-title">Science & Technology</h2>
+                    <article class="article">
+                        <h3 class="article-title"><a href="https://www.nasa.gov/2025-news-releases/" target="_blank">NASA Announces Space Station Crew Rotation Conference</a></h3>
+                        <div class="article-summary">
+                            NASA and its partners will discuss the upcoming crew rotation to the International Space Station during news conferences on Thursday, July 10, from Johnson Space Center in Houston. NASA astronaut Anil Menon will embark on his first mission to the International Space Station as part of the crew rotation schedule.
+                        </div>
+                        <div class="article-meta">
+                            <a href="https://www.nasa.gov/2025-news-releases/" class="source" target="_blank">NASA</a>
+                            <span class="read-time">3 min read</span>
+                        </div>
+                    </article>
+
+                    <article class="article">
+                        <h3 class="article-title"><a href="https://www.nasa.gov/blogs/spacestation/2025/06/12/nasa-axiom-space-delay-axiom-mission-4-launch-to-space-station/" target="_blank">NASA Delays Axiom Mission 4 Launch Due to Space Station Investigation</a></h3>
+                        <div class="article-summary">
+                            NASA and Axiom Space have postponed the launch of Axiom Mission 4 to the International Space Station. The delay is part of an ongoing investigation into a new pressure signature in the aft segment of the station's Zvezda service module, requiring additional safety assessments before launch.
+                        </div>
+                        <div class="article-meta">
+                            <a href="https://www.nasa.gov/blogs/spacestation/2025/06/12/nasa-axiom-space-delay-axiom-mission-4-launch-to-space-station/" class="source" target="_blank">NASA</a>
+                            <span class="read-time">3 min read</span>
+                        </div>
+                    </article>
+                </section>
+
+                <section id="health" class="section">
+                    <h2 class="section-title">Health</h2>
+                    <article class="article">
+                        <h3 class="article-title"><a href="https://www.pbs.org/newshour/show/june-9-2025-pbs-news-hour-full-episode" target="_blank">Trump Administration Fills Health Roles Despite Extremist Concerns</a></h3>
+                        <div class="article-summary">
+                            A look at how the Trump administration is filling critical health roles with people who have alleged extremist ties. Health advocacy groups express concern about the qualifications and backgrounds of key appointees in federal health agencies, raising questions about the future of public health policy.
+                        </div>
+                        <div class="article-meta">
+                            <a href="https://www.pbs.org/newshour/show/june-9-2025-pbs-news-hour-full-episode" class="source" target="_blank">PBS News Hour</a>
+                            <span class="read-time">4 min read</span>
+                        </div>
+                    </article>
+                </section>
+
+                <section id="climate" class="section">
+                    <h2 class="section-title">Climate</h2>
+                    <article class="article">
+                        <h3 class="article-title"><a href="https://www.cnn.com/2025/07/02/us/5-things-to-know-for-july-2-usaid-ukraine-munitions-trump-megabill-climate-change-paramount-settlement" target="_blank">Marine Heat Wave Causes Europe to Swelter</a></h3>
+                        <div class="article-summary">
+                            A marine heat wave in the Mediterranean Sea combined with a powerful heat dome is causing Europe to swelter under extreme temperatures. The heat has been so intense that even the Eiffel Tower in Paris had to close temporarily, highlighting the growing impact of climate change on daily life and infrastructure.
+                        </div>
+                        <div class="article-meta">
+                            <a href="https://www.cnn.com/2025/07/02/us/5-things-to-know-for-july-2-usaid-ukraine-munitions-trump-megabill-climate-change-paramount-settlement" class="source" target="_blank">CNN</a>
+                            <span class="read-time">3 min read</span>
+                        </div>
+                    </article>
+                </section>
+
+                <section id="entertainment" class="section">
+                    <h2 class="section-title">Entertainment</h2>
+                    <article class="article">
+                        <h3 class="article-title"><a href="https://apnews.com/live/donald-trump-news-updates-7-3-2025" target="_blank">Trump Kicks Off 250th Birthday Countdown at Iowa State Fair</a></h3>
+                        <div class="article-summary">
+                            President Trump spoke at the Iowa State Fairgrounds in an event meant to start the countdown to America's 250th birthday in 2026. The crowd filled with patriotic attire and MAGA merchandise gathered hours before Trump's arrival, with volunteers distributing ice-cold water bottles to attendees in red, white, and blue.
+                        </div>
+                        <div class="article-meta">
+                            <a href="https://apnews.com/live/donald-trump-news-updates-7-3-2025" class="source" target="_blank">AP News</a>
+                            <span class="read-time">3 min read</span>
+                        </div>
+                    </article>
+                </section>
+            </main>
+            
+            <aside class="sidebar">
+                <h3>Most Read</h3>
+                <div class="sidebar-item">
+                    <div class="sidebar-title">Trump Confirms Tariffs Take Effect Today</div>
+                    <div class="sidebar-source">AP News</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="sidebar-title">Russia's Record Drone Attack on Ukraine</div>
+                    <div class="sidebar-source">Kyiv Post</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="sidebar-title">California Sues Over National Guard</div>
+                    <div class="sidebar-source">PBS News Hour</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="sidebar-title">NASA Space Station Crew Rotation</div>
+                    <div class="sidebar-source">NASA</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="sidebar-title">Europe Heat Wave Closes Eiffel Tower</div>
+                    <div class="sidebar-source">CNN</div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <h4>Suricata Digest</h4>
+                <p>Intelligence-Driven News Curation</p>
+                <p>Sources: AP News, NPR, PBS News Hour, NASA, CNN, CNBC, Kyiv Post</p>
+                <p>Updated: July 9, 2025 | Next Edition:
